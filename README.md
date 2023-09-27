@@ -1,6 +1,7 @@
 # oop-game-show
 Unit 04 project for the Full Stack JavaScript Techdegree. This is an online word guessing game: “Pokemon Finder.” This uses JavaScript and OOP (Object-Oriented Programming) to select a random, hidden pokemon names, which a player tries to guess, by clicking letters on an onscreen keyboard or their physical keyboard.
 
+![Screenshot 2023-09-27 at 9 39 35 AM](https://github.com/tamarabuilds/oop-game-show/assets/98510821/2bdafe76-89a5-4c29-acc4-134d5b119518)
 
 
 ## Installation
