@@ -3,8 +3,8 @@
  * app.js */
 
 /** ELEMENT SELECTORS */
-const startButton = document.querySelector('#btn__reset')
-const screenKeyboard = document.querySelector('#qwerty')
+const startButton = document.querySelector('#btn__reset');
+const screenKeyboard = document.querySelector('#qwerty');
 
 /** Game element */
 let game = {};
@@ -14,8 +14,8 @@ let game = {};
  * @event
  */
 startButton.addEventListener('click', ()=> {
-    game = new Game()
-    game.startGame()
+    game = new Game();
+    game.startGame();
 });
 
 /***
@@ -23,7 +23,7 @@ startButton.addEventListener('click', ()=> {
  * @event
  */
 screenKeyboard.addEventListener('click', (event)=> {
-    // Ensures a button is clicked and not the space around buttons
+    // Ensures a button is clicked and not the space around buttons.
     const letterClicked = event.target.closest('button');
     if (letterClicked) {
         game.handleInteraction(letterClicked);
@@ -36,17 +36,19 @@ screenKeyboard.addEventListener('click', (event)=> {
  */
 document.addEventListener('keyup', (event)=> {
     let keyPressed = event.key;
-    const isKeyWord = /[a-zA-Z]+/.test(keyPressed)
-    const letterButtons = document.querySelectorAll('#qwerty button')
+    const isLetterKey = /[a-zA-Z]+/.test(keyPressed);
+    const letterButtons = document.querySelectorAll('#qwerty button');
     let letterKey = null;
-
-    if (isKeyWord) {
+    // only want to send letterKey if there is no overlay screen.
+    const overlayDisplay = document.querySelector('#overlay').style.display;
+    
+    if (isLetterKey && overlayDisplay === 'none') {
         keyPressed = keyPressed.toLowerCase();
         letterButtons.forEach( letter => {
             if (letter.innerHTML === keyPressed) {
-                letterKey = letter
+                letterKey = letter;
             }
         });
-        game.handleInteraction(letterKey)
+        game.handleInteraction(letterKey);
     }    
 });

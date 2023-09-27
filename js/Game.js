@@ -29,10 +29,10 @@ class Game {
      * Start the game, remove overlay, select random phrase, and display it.
      */
     startGame() {
-        const overlay = document.querySelector('#overlay')
-        const finalImg = document.querySelector('#overlay h1 img')
+        const overlay = document.querySelector('#overlay');
+        const finalImg = document.querySelector('#overlay h1 img');
 
-        overlay.style.display = 'none'                              // couldn't set this with overlay.hidden = true; see mdn
+        overlay.style.display = 'none';
         this.activePhrase = this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
     }
@@ -52,19 +52,19 @@ class Game {
      * @param {string} letter - letter selected by the user
      */
     handleInteraction(letterButton) {
-        const letter = letterButton.innerText
+        const letter = letterButton.innerText;
 
         // disable guessed letter's onscreen keyboard button
         letterButton.disabled = 'true'
 
         // if guessed letter is correct/wrong, indicate on keyboard and remove life or check for win
         if (game.activePhrase.checkLetter(letter)){
-            letterButton.classList.add('chosen')
-            game.activePhrase.showMatchedLetter(letter)
+            letterButton.classList.add('chosen');
+            game.activePhrase.showMatchedLetter(letter);
                                             // if user wins, should I let them see the winning solution for a short time?
             this.checkForWin() ? this.gameOver() : '';
         } else {
-            letterButton.classList.add('wrong')
+            letterButton.classList.add('wrong');
             this.removeLife();
         }       
     }
@@ -78,7 +78,7 @@ class Game {
         const hearts = document.querySelectorAll('#scoreboard li');
 
         for (let i = 0; i <= this.missed; i++){
-            hearts[i].firstElementChild.src = "images/lostHeart.png"
+            hearts[i].firstElementChild.src = "images/lostHeart.png";
         }
         this.missed++;
         this.missed === 5 ? this.gameOver() : '';
@@ -87,12 +87,12 @@ class Game {
     /**
      * Checks if there are any more hidden letters to find.
      * 
-     * @returns {boolean} - true if the player won
+     * @returns {boolean} - true if the player won.
      */
 
     checkForWin(){
-        const hiddenLetterCount = document.querySelectorAll('#phrase li.hide').length
-        return (!hiddenLetterCount)
+        const hiddenLetterCount = document.querySelectorAll('#phrase li.hide').length;
+        return (!hiddenLetterCount);
     }
 
     /**
@@ -101,21 +101,22 @@ class Game {
      * No params or return.
      */
     gameOver() {
-        const overlay = document.querySelector('#overlay')
+        const overlay = document.querySelector('#overlay');
         const winMessage = 'Congrats! You rocked that!';
         const loseMessage = "Bummer! Next time you'll get it.";
-        const h1 = overlay.querySelector('h1')
-        const cutePikachu = `<img src="images/pokemon.png" alt="Pikachu Clipart Transparent Background" class="final-img">`
+        const h1 = overlay.querySelector('h1');
+        const cutePikachu = `<img src="images/pokemon.png" alt="Pikachu Clipart Transparent Background" class="final-img">`;
         
         overlay.style.display = 'block';
         this.checkForWin() ? h1.innerText = winMessage : h1.innerText = loseMessage;
-        this.resetGame()
+        this.resetGame();
 
-        const img = document.querySelector('.final-img')
+        // Adds only 1 final image of a pokemon at the end. FOR LATER: could this be done more efficiently?
+        const img = document.querySelector('.final-img');
         if (!img) {
-            h1.insertAdjacentHTML('afterend', cutePikachu)
+            h1.insertAdjacentHTML('afterend', cutePikachu);
         } else {
-            h1.insertAdjacentHTML('afterend', '')
+            h1.insertAdjacentHTML('afterend', '');
         }
     }
     
