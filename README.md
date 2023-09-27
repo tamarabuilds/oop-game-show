@@ -16,6 +16,13 @@ Initially, a random phrase is selected, split into letters, and put on the gameb
 
 The player continues to play until they guess the phrase (and win!) or make five incorrect guesses (and lose). The program will disable letters that have already been guessed. Either a winning or losing screen will appear with a cute pokemon image.
 
+## Customizations
+
+This code includes several modifications to the ‘Phrase Hunter’ OOP Game including:
+* Updated background color in CSS on the game play screen
+* Updated title and headings in HTML to align with the ‘Pokemon Finder’ theme.
+* Inserted img in JavaScript on the final win/lose overlay screen with updated CSS to properly display the img.
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
