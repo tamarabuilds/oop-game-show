@@ -15,22 +15,28 @@ class Game {
      */
     constructor() {
         this.missed = 0;
-        this.phrases = [new Phrase('We got this'),
-            new Phrase('Code more worry less'), 
-            new Phrase('supercalifragilisticexpialidocious'),
-            new Phrase('Nerds for the win'),
-            new Phrase('Hi')];      // should I initialize the 5 here?
+        this.phrases = [new Phrase('eternamax eternatus'),
+            new Phrase('pikachu'), 
+            new Phrase('togepi'),
+            new Phrase('eevee'),
+            new Phrase('charmander'),
+            new Phrase('bulbasaur'),
+            new Phrase('jigglypuff')];
         this.activePhrase = null;
     }
+
     /**
      * Start the game, remove overlay, select random phrase, and display it.
      */
     startGame() {
         const overlay = document.querySelector('#overlay')
+        const finalImg = document.querySelector('#overlay h1 img')
+
         overlay.style.display = 'none'                              // couldn't set this with overlay.hidden = true; see mdn
         this.activePhrase = this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
     }
+
     /** 
      * Randomly selects a phrase.
      * @return {string} - phrase stored at the randomly selected index number
@@ -39,6 +45,7 @@ class Game {
         const randomNumber = Math.floor( Math.random() * this.phrases.length);
         return this.phrases[randomNumber];
     }
+
     /**
      * Handles most game interaction, state, and logic.
      * 
@@ -54,12 +61,14 @@ class Game {
         if (game.activePhrase.checkLetter(letter)){
             letterButton.classList.add('chosen')
             game.activePhrase.showMatchedLetter(letter)
+                                            // if user wins, should I let them see the winning solution for a short time?
             this.checkForWin() ? this.gameOver() : '';
         } else {
             letterButton.classList.add('wrong')
             this.removeLife();
         }       
     }
+
     /**
      * Removes a life heart and checks if the game is over.
      * 
@@ -74,15 +83,18 @@ class Game {
         this.missed++;
         this.missed === 5 ? this.gameOver() : '';
     }
+
     /**
      * Checks if there are any more hidden letters to find.
      * 
      * @returns {boolean} - true if the player won
      */
+
     checkForWin(){
         const hiddenLetterCount = document.querySelectorAll('#phrase li.hide').length
         return (!hiddenLetterCount)
     }
+
     /**
      * Demonstrates the game is over with a win/lose message.
      * 
@@ -93,11 +105,20 @@ class Game {
         const winMessage = 'Congrats! You rocked that!';
         const loseMessage = "Bummer! Next time you'll get it.";
         const h1 = overlay.querySelector('h1')
-
+        const cutePikachu = `<img src="images/pokemon.png" alt="Pikachu Clipart Transparent Background" class="final-img">`
+        
         overlay.style.display = 'block';
         this.checkForWin() ? h1.innerText = winMessage : h1.innerText = loseMessage;
         this.resetGame()
+
+        const img = document.querySelector('.final-img')
+        if (!img) {
+            h1.insertAdjacentHTML('afterend', cutePikachu)
+        } else {
+            h1.insertAdjacentHTML('afterend', '')
+        }
     }
+    
     /**
      * Resets the phrase location, keyboard, and hearts after the player has won/lost.
      * 

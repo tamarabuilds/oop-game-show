@@ -35,6 +35,18 @@ screenKeyboard.addEventListener('click', (event)=> {
  * @event
  */
 document.addEventListener('keyup', (event)=> {
-    const keyPressed = event.key;
-    console.log(keyPressed)
+    let keyPressed = event.key;
+    const isKeyWord = /[a-zA-Z]+/.test(keyPressed)
+    const letterButtons = document.querySelectorAll('#qwerty button')
+    let letterKey = null;
+
+    if (isKeyWord) {
+        keyPressed = keyPressed.toLowerCase();
+        letterButtons.forEach( letter => {
+            if (letter.innerHTML === keyPressed) {
+                letterKey = letter
+            }
+        });
+        game.handleInteraction(letterKey)
+    }    
 });

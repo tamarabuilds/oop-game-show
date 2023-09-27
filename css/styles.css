@@ -28,6 +28,7 @@ body {
   flex-direction: column;
   display: flex;
   height: 100vh;
+  background-color: lightyellow;
 }
 
 li, ol, ul {
@@ -201,4 +202,11 @@ button {
 
 .lose a {
   color: var(--color-lose);
+}
+
+.final-img {
+  max-width: 100px;
+  display: block;
+  margin: 10px auto;
+
 }
