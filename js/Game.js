@@ -1,3 +1,119 @@
 /* Treehouse FSJS Techdegree
  * Project 4 - OOP Game App
  * Game.js */
+
+/***
+ * Creates the game class, managing the game's state, logic and interactions.
+ * @class
+ */
+class Game {
+    /**
+     * Create a game.
+     * 
+     * No params.
+     * Includes list of phrases.
+     */
+    constructor() {
+        this.missed = 0;
+        this.phrases = [new Phrase('We got this'),
+            new Phrase('Code more worry less'), 
+            new Phrase('supercalifragilisticexpialidocious'),
+            new Phrase('Nerds for the win'),
+            new Phrase('Hi')];      // should I initialize the 5 here?
+        this.activePhrase = null;
+    }
+    /**
+     * Start the game, remove overlay, select random phrase, and display it.
+     */
+    startGame() {
+        const overlay = document.querySelector('#overlay')
+        overlay.style.display = 'none'                              // couldn't set this with overlay.hidden = true; see mdn
+        this.activePhrase = this.getRandomPhrase();
+        this.activePhrase.addPhraseToDisplay();
+    }
+    /** 
+     * Randomly selects a phrase.
+     * @return {string} - phrase stored at the randomly selected index number
+     */
+    getRandomPhrase() {
+        const randomNumber = Math.floor( Math.random() * this.phrases.length);
+        return this.phrases[randomNumber];
+    }
+    /**
+     * Handles most game interaction, state, and logic.
+     * 
+     * @param {string} letter - letter selected by the user
+     */
+    handleInteraction(letterButton) {
+        const letter = letterButton.innerText
+
+        // disable guessed letter's onscreen keyboard button
+        letterButton.disabled = 'true'
+
+        // if guessed letter is correct/wrong, indicate on keyboard and remove life or check for win
+        if (game.activePhrase.checkLetter(letter)){
+            letterButton.classList.add('chosen')
+            game.activePhrase.showMatchedLetter(letter)
+            this.checkForWin() ? this.gameOver() : '';
+        } else {
+            letterButton.classList.add('wrong')
+            this.removeLife();
+        }       
+    }
+    /**
+     * Removes a life heart and checks if the game is over.
+     * 
+     * No params or return.
+     */
+    removeLife() {
+        const hearts = document.querySelectorAll('#scoreboard li');
+
+        for (let i = 0; i <= this.missed; i++){
+            hearts[i].firstElementChild.src = "images/lostHeart.png"
+        }
+        this.missed++;
+        this.missed === 5 ? this.gameOver() : '';
+    }
+    /**
+     * Checks if there are any more hidden letters to find.
+     * 
+     * @returns {boolean} - true if the player won
+     */
+    checkForWin(){
+        const hiddenLetterCount = document.querySelectorAll('#phrase li.hide').length
+        return (!hiddenLetterCount)
+    }
+    /**
+     * Demonstrates the game is over with a win/lose message.
+     * 
+     * No params or return.
+     */
+    gameOver() {
+        const overlay = document.querySelector('#overlay')
+        const winMessage = 'Congrats! You rocked that!';
+        const loseMessage = "Bummer! Next time you'll get it.";
+        const h1 = overlay.querySelector('h1')
+
+        overlay.style.display = 'block';
+        this.checkForWin() ? h1.innerText = winMessage : h1.innerText = loseMessage;
+        this.resetGame()
+    }
+    /**
+     * Resets the phrase location, keyboard, and hearts after the player has won/lost.
+     * 
+     * No params or return.
+     */
+    resetGame(){
+        const phraseLocation = document.querySelector('#phrase ul');
+        const screenKeyboardLetters = document.querySelectorAll('#qwerty button');
+        const hearts = document.querySelectorAll('#scoreboard li');
+
+        phraseLocation.innerHTML = '';
+        screenKeyboardLetters.forEach( letter => {
+            letter.removeAttribute('disabled');
+            letter.className = 'key';
+        });
+
+        hearts.forEach( heart => heart.firstElementChild.src = "images/liveHeart.png");
+    }
+}
