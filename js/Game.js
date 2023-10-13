@@ -97,7 +97,8 @@ class Game {
 
     /**
      * Demonstrates the game is over with an overlay,
-     * win/lose message, and a fun pokemon at the end.
+     * display a win/lose message, call resetGame() to be ready for the next round,
+     * and display a fun pokemon at the end.
      * 
      * No params or return.
      */
@@ -117,6 +118,7 @@ class Game {
 
         // Adds only 1 final image of a pokemon at the end. 
         //          FOR LATER: could this be done more efficiently?
+                    // h1.insertAdjacentHTML('afterend', cutePikachu);
         const img = document.querySelector('.final-img');
         if (!img) {
             h1.insertAdjacentHTML('afterend', cutePikachu);
