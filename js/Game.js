@@ -96,7 +96,8 @@ class Game {
     }
 
     /**
-     * Demonstrates the game is over with a win/lose message.
+     * Demonstrates the game is over with an overlay,
+     * win/lose message, and a fun pokemon at the end.
      * 
      * No params or return.
      */
@@ -107,11 +108,15 @@ class Game {
         const h1 = overlay.querySelector('h1');
         const cutePikachu = `<img src="images/pokemon.png" alt="Pikachu Clipart Transparent Background" class="final-img">`;
         
+        // Turning on the overlay
         overlay.style.display = 'block';
+        // Setting final message to win or lose based on checkForWin()
         this.checkForWin() ? h1.innerText = winMessage : h1.innerText = loseMessage;
+        // Reset the game in the background
         this.resetGame();
 
-        // Adds only 1 final image of a pokemon at the end. FOR LATER: could this be done more efficiently?
+        // Adds only 1 final image of a pokemon at the end. 
+        //          FOR LATER: could this be done more efficiently?
         const img = document.querySelector('.final-img');
         if (!img) {
             h1.insertAdjacentHTML('afterend', cutePikachu);
